@@ -38,5 +38,18 @@ $ionicons-font-path: "../lib/ionic/fonts" !default;
         ion-item.item {
             border: none;
         }
+        .item.item-body {
+            height: 100%;
+            opacity: 1;
+            transition: all 0.5s ease-in-out;
+        }
+        .item.item-body.ng-hide {
+            height: 0;
+            opacity: 0;
+        }
+        .item.item-body.ng-hide-add.ng-hide-add-active,
+        .item.item-body.ng-hide-remove.ng-hide-remove-active {
+            transition: all 0.5s ease-in-out;
+        }
     }
 }

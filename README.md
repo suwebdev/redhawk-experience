@@ -1,7 +1,7 @@
 The Redhawk Experience
 ======================
 
-A mobile engagement app for Seattle University students. Created by Student Development Services, Marketing and Communications, and the Web, Technology and Application Studies program.
+A mobile engagement app for Seattle University students. Created by Student Development Services, Marketing and Communications, and the Web, Application and Technology Studies program.
 
 ## More to come
 
