@@ -5,12 +5,11 @@
     <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
     <title></title>
 
-    <link href="lib/ionic/css/ionic.css" rel="stylesheet">
-    <link href="css/style.css" rel="stylesheet">
+    <!-- <link href="lib/ionic/css/ionic.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet"> -->
 
-    <!-- IF using Sass (run gulp sass first), then uncomment below and remove the CSS includes above
+    <!-- IF using Sass (run gulp sass first), then uncomment below and remove the CSS includes above -->
     <link href="css/ionic.app.css" rel="stylesheet">
-    -->
 
     <!-- ionic/angularjs js -->
     <script src="lib/ionic/js/ionic.bundle.js"></script>
@@ -25,24 +24,101 @@
     <ion-side-menus>
       <!-- Center content -->
       <ion-side-menu-content>
-        <ion-header-bar class="bar-dark">
+        <ion-header-bar class="bar-assertive">
+          <button class="button button-icon" ng-click="toggleMenu()">
+            <i class="icon ion-navicon"></i>
+          </button>
           <h1 class="title">Redhawk Experience</h1>
         </ion-header-bar>
+        <div class="bar bar-subheader bar-dark">
+          <h2 class="title">{{activeCategory.title}}</h2>
+        </div>
         <ion-content>
           <!-- main content listing -->
           <ion-list>
-            <ion-item ng-repeat="experience in experiences">
-              {{experience.title}}
+            <ion-item ng-repeat="experience in activeCategory.experiences" class="experience-card">
+              <div class="list card">
+                <div class="item item-avatar" ng-click="showDetails(experience)">
+                  <img src="http://placekitten.com/64/64/">
+                  <h2>{{experience.title}}</h2>
+                  <p>Subtext</p>
+                </div>
+                <div class="item item-body" ng-show="displayDetails == experience">
+                  <img class="full-image" src="http://placekitten.com/300/200/">
+                  <p>
+                    Wayfarers squid next level street art tattooed swag vinyl. Biodiesel church-key vegan, pickled hoodie fanny pack master cleanse freegan tattooed organic fixie VHS next level.
+                  </p>
+                  <p>
+                    <a href="#" class="subdued">1 Friend Completed</a>
+                    <a href="#" class="subdued">5 Comments</a>
+                  </p>
+                </div>
+                <div class="item tabs tabs-secondary tabs-icon-left">
+                  <a class="tab-item" href="#">
+                    <i class="icon ion-checkmark-circled"></i>
+                    Done
+                  </a>
+                  <a class="tab-item" href="#">
+                    <i class="icon ion-chatbox"></i>
+                    Comment
+                  </a>
+                  <a class="tab-item" href="#">
+                    <i class="icon ion-share"></i>
+                    Share
+                  </a>
+                </div>
+              </div>
             </ion-item>
           </ion-list>
         </ion-content>
       </ion-side-menu-content>
       <!-- Sidebar -->
       <ion-side-menu side="left">
-        <ion-header-bar class="bar-dark">
+        <ion-header-bar class="bar-assertive">
           <h1 class="title">Menu</h1>
         </ion-header-bar>
+        <ion-content scroll="false">
+          <ion-list>
+            <ion-item ng-repeat="category in categories" ng-click="selectCategory(category, $index)" ng-class="{active:activeCategory == category}">
+              {{category.title}}
+            </ion-item>
+          </ion-list>
+          <ion-list>
+            <ion-item>Profile</ion-item>
+            <ion-item>Help</ion-item>
+            <ion-item>About</ion-item>
+          </ion-list>
       </ion-side-menu>
     </ion-side-menus>
+    <!-- TEMPLATES -->
+    <script id="new-experience.html" type="text/ng-template">
+
+      <div class="modal">
+
+        <!-- Modal header bar -->
+        <ion-header-bar class="bar-secondary">
+          <h1 class="title">New Experience</h1>
+          <button class="button button-clear button-positive" ng-click="closeNewExperience()">Cancel</button>
+        </ion-header-bar>
+
+        <!-- Modal content area -->
+        <ion-content>
+
+          <form ng-submit="createExperience(experience)">
+            <div class="list">
+              <label class="item item-input">
+                <input type="text" placeholder="What do you want to do?" ng-model="experience.title">
+              </label>
+            </div>
+            <div class="padding">
+              <button type="submit" class="button button-block button-positive">Create Experience</button>
+            </div>
+          </form>
+
+        </ion-content>
+
+      </div>
+
+    </script>
   </body>
 </html>
