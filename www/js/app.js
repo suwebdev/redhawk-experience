@@ -47,17 +47,23 @@ angular.module('rhx', ['ionic', 'firebase'])
     }
   }
 })
-
-.controller('ExperienceCtrl', function($scope, $timeout, $ionicModal, Categories, $ionicSideMenuDelegate, $firebase) {
-  // A utility function for creating a new category
-  // with the given categoryTitle
-  var createCategory = function(categoryTitle) {
-    var newCategory = Categories.newCategory(categoryTitle);
-    $scope.categories.push(newCategory);
-    Categories.save($scope.categories);
-    $scope.selectCategory(newCategory, $scope.categories.length-1);
-  };
-
+.controller('ExperienceCtrl', function($scope, $timeout, $ionicModal, Categories, $ionicSideMenuDelegate, $firebase, $firebaseSimpleLogin) {
+  // Initialize user
+  // Handle login/id stuff
+  var loginDataRef = new Firebase("https://redhawk-experience.firebaseio.com/");
+  $scope.loginObj = $firebaseSimpleLogin(loginDataRef);
+  $scope.loginData = {};
+  $scope.loginObj.$getCurrentUser().then(function(user) {
+    if(!user){
+      console.log('No current user found');
+      // Might already be handled by logout event below
+      $scope.openLogin();
+    } else {
+      console.log('Found current user: ', user);
+    }
+  }, function(err) {
+    console.log('Error happened loading current user: ', err);
+  });
   // Load or initialize categories
   $scope.categories = Categories.all();
 
@@ -91,14 +97,163 @@ angular.module('rhx', ['ionic', 'firebase'])
 
   };
 
-  // Create and load Modal
-  $ionicModal.fromTemplateUrl('new-experience.html', function(modal) {
-    $scope.experienceModal = modal;
+  // Experiencing Stuff
+  $scope.commentDataObj = new Firebase(baseFirebaseURL + 'comments/');
+  $scope.commentData = {};
+  $scope.submitComment = function() {
+    var commentFBData = {};
+    commentFBData[$scope.commentData.category.slug] = {};
+    commentFBData[$scope.commentData.category.slug][$scope.commentData.experience.id] = {
+      user: $scope.loginObj.user.id,
+      text: $scope.commentData.text,
+      timestamp: Firebase.ServerValue.TIMESTAMP
+    };
+    $scope.commentDataObj.set(commentFBData);
+    console.log('Saved comment', commentFBData);
+    $scope.closeComment();
+  };
+
+  $scope.doneDataObj = new Firebase(baseFirebaseURL + 'done/');
+  $scope.markDone = function(experience) {
+    var doneData = {};
+    doneData[$scope.loginObj.user.id] = {};
+    doneData[$scope.loginObj.user.id][experience.catSlug] = {};
+    doneData[$scope.loginObj.user.id][experience.catSlug][experience.id] = {
+      title: experience.title,
+      catSlug: experience.catSlug,
+      id: experience.id
+    };
+    $scope.doneDataObj.set(doneData);
+    console.log('Marked experience done: ', experience);
+  };
+  $scope.checkCompletion = function(experience) {
+    console.log('checking for completion of this experience: ', experience);
+    if ($scope.loginObj.user) {
+      var checkResult = $scope.doneDataObj
+        .child($scope.loginObj.user.id)
+        .child(experience.catSlug)
+        .child(experience.id).on('value', function(snapshot) {
+          if(snapshot.val() === null) {
+            console.log('Incomplete');
+            return false;
+          } else {
+            console.log('Complete');
+            return true;
+          }
+        });
+    } else {
+      return false;
+    }
+  };
+
+  // END EXPERIENCING STUFF
+
+  // Handle login/id stuff
+  var loginDataRef = new Firebase("https://redhawk-experience.firebaseio.com/");
+  $scope.loginObj = $firebaseSimpleLogin(loginDataRef);
+  $scope.loginData = {};
+  $scope.loginObj.$getCurrentUser().then(function(user) {
+    if(!user){
+      console.log('No current user found');
+      // Might already be handled by logout event below
+      $scope.openLogin();
+    } else {
+      console.log('Found current user: ', user);
+    }
+  }, function(err) {
+    console.log('Error happened loading current user: ', err);
+  });
+
+  $scope.tryRegister = function() {
+    console.log('Attempting to register new user.');
+    $scope.loginObj.$createUser(
+      $scope.loginData.email,
+      $scope.loginData.password).then(function(user) {
+          console.log('CREATED User ID: ' + user.uid + ', Email: ' + user.email);
+      }, function(error) {
+          console.log('ERROR creating user: ', error);
+      });
+    $scope.closeRegister();
+    $scope.tryLogin();
+  };
+
+  $scope.tryLogin = function() {
+    $scope.loginObj.$login('password', {
+      email: $scope.loginData.email,
+      password: $scope.loginData.password
+    }).then(function(user) {
+      // The root scope event will trigger and navigate
+      console.log('Logged in as: ', user.uid);
+      $scope.closeLogin();
+      $ionicSideMenuDelegate.toggleLeft(false);
+    }, function(error) {
+      // Show a form error here
+      console.error('Unable to login', error);
+    });
+  };
+  // END LOGIN/ID STUFF
+
+  // Create and load Modals
+  $ionicModal.fromTemplateUrl('login.html', function(modal) {
+    $scope.loginModal = modal;
   }, {
     scope: $scope,
     animation: 'slide-in-up'
   });
 
+  $ionicModal.fromTemplateUrl('register.html', function(modal) {
+    $scope.registerModal = modal;
+  }, {
+    scope: $scope,
+    animation: 'slide-in-up'
+  });
+
+  $ionicModal.fromTemplateUrl('logout.html', function(modal) {
+    $scope.logoutModal = modal;
+  }, {
+    scope: $scope,
+    animation: 'slide-in-up'
+  });
+
+  $ionicModal.fromTemplateUrl('comment.html', function(modal) {
+    $scope.commentModal = modal;
+  }, {
+    scope: $scope,
+    animation: 'slide-in-up'
+  });
+  $scope.openComment = function(experience, category) {
+    if (!$scope.loginObj.user) {
+      $scope.loginModal.show();
+    } else {
+      $scope.commentData.experience = experience;
+      $scope.commentData.category = category;
+      $scope.commentModal.show();
+    }
+  };
+  $scope.closeComment = function() {
+    $scope.commentModal.hide();
+  };
+  $scope.openRegister = function() {
+    $scope.registerModal.show();
+  };
+  $scope.closeRegister = function() {
+    $scope.registerModal.hide();
+  };
+  $scope.openLogin = function() {
+    $scope.loginModal.show();
+  };
+  $scope.closeLogin = function() {
+    $scope.loginModal.hide();
+  };
+  $scope.openLogout = function() {
+    $scope.loginObj.$logout();
+    console.log('User has been logged out.');
+    $scope.logoutModal.show();
+  };
+  $scope.closeLogout = function() {
+    $scope.logoutModal.hide();
+  };
+  // END Modals
   $scope.toggleMenu = function() {
     $ionicSideMenuDelegate.toggleLeft();
   };

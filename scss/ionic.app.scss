@@ -52,4 +52,13 @@ $ionicons-font-path: "../lib/ionic/fonts" !default;
             transition: all 0.5s ease-in-out;
         }
     }
+    .card-experience .item-avatar h2 {
+        white-space: normal;
+    }
+}
+ion-content {
+    margin-top: 40px !important;
+}
+.modal-wrapper ion-content {
+    margin-top: 0 !important;
 }

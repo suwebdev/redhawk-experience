@@ -7061,3 +7061,11 @@ a.button {
   opacity: 0; }
 .menu-content .list .item.item-body.ng-hide-add.ng-hide-add-active, .menu-content .list .item.item-body.ng-hide-remove.ng-hide-remove-active {
   transition: all 0.5s ease-in-out; }
+.menu-content .card-experience .item-avatar h2 {
+  white-space: normal; }
+
+ion-content {
+  margin-top: 40px !important; }
+
+.modal-wrapper ion-content {
+  margin-top: 0 !important; }

@@ -1,63 +1,62 @@
 [
-{ "title": "Academic Excellence", "experiences": [
-{ "title": "Explore majors" },
-{ "title": "Declare a major" },
-{ "title": "Work with a professor on research" },
-{ "title": "Learning Assistance programs" },
-{ "title": "Learning communities" },
-{ "title": "Take the State of the Undergraduate Student Survey" }
 
+{ "title": "Academic Excellence", "slug": "academic-excellence", "experiences": [
+    { "id": 1, "catSlug": "academic-excellence", "title": "Explore majors" },
+    { "id": 2, "catSlug": "academic-excellence", "title": "Declare a major" },
+    { "id": 3, "catSlug": "academic-excellence", "title": "Work with a professor on research" },
+    { "id": 4, "catSlug": "academic-excellence", "title": "Learning Assistance programs" },
+    { "id": 5, "catSlug": "academic-excellence", "title": "Learning communities" },
+    { "id": 6, "catSlug": "academic-excellence", "title": "Take the State of the Undergraduate Student Survey" }
 ]},
-{ "title": "Care/Play", "experiences": [
-{ "title": "Take an outdoor adventure trip with OAR" },
-{ "title": "Participate in the Wellness Challenge" },
-{ "title": "Work out at the Eisiminger Fitness Center" },
-{ "title": "Visit Seattle area parks" },
-{ "title": "RecFest" },
-{ "title": "Get a food map of all the edible foods on campus and pick them" },
-{ "title": "DJ a show on KSUB" }
-
+{ "title": "Care/Play", "slug": "care-play", "experiences": [
+    { "id": 7, "catSlug": "care-play", "title": "Take an outdoor adventure trip with OAR" },
+    { "id": 8, "catSlug": "care-play", "title": "Participate in the Wellness Challenge" },
+    { "id": 9, "catSlug": "care-play", "title": "Work out at the Eisiminger Fitness Center" },
+    { "id": 10, "catSlug": "care-play", "title": "Visit Seattle area parks" },
+    { "id": 11, "catSlug": "care-play", "title": "RecFest" },
+    { "id": 12, "catSlug": "care-play", "title": "Get a food map of all the edible foods on campus and pick them" },
+    { "id": 13, "catSlug": "care-play", "title": "DJ a show on KSUB" }
 ]},
-{ "title": "Diversity", "experiences": [
-{ "title": "Attend an SU cultural festival, event or celebration" },
-{ "title": "Attend the MLK Jr. Celebration lecture" },
-{ "title": "Go to the annual International Dinner" },
-{ "title": "Attend the SU Drag Show" }
+{ "title": "Diversity", "slug": "diversity", "experiences": [
+    { "id": 14, "catSlug": "diversity", "title": "Attend an SU cultural festival, event or celebration" },
+    { "id": 15, "catSlug": "diversity", "title": "Attend the MLK Jr. Celebration lecture" },
+    { "id": 16, "catSlug": "diversity", "title": "Go to the annual International Dinner" },
+    { "id": 17, "catSlug": "diversity", "title": "Attend the SU Drag Show" }
 ]},
-{ "title": "Justice/Service", "experiences": [
-{ "title": "Swishes for Wishes" },
-{ "title": "Participate in the Eco-Challenge" },
-{ "title": "Volunteer your time with the Seattle University Youth Initiative " },
-{ "title": "Show off your moves @ Dance Marathon" }
+{ "title": "Justice/Service", "slug": "justice-service", "experiences": [
+    { "id": 18, "catSlug": "justice-service", "title": "Swishes for Wishes" },
+    { "id": 19, "catSlug": "justice-service", "title": "Participate in the Eco-Challenge" },
+    { "id": 20, "catSlug": "justice-service", "title": "Volunteer your time with the Seattle University Youth Initiative " },
+    { "id": 21, "catSlug": "justice-service", "title": "Show off your moves @ Dance Marathon" }
 ]},
-{ "title": "Spirituality/Faith", "experiences": [
-{ "title": "Attend a convocation" },
-{ "title": "Attend a Campus Ministry retreat" },
-{ "title": "Visit the Chapel of St. Ignatius" }
+{ "title": "Spirituality/Faith", "slug": "spirituality-faith", "experiences": [
+    { "id": 22, "catSlug": "spirituality-faith", "title": "Attend a convocation" },
+    { "id": 23, "catSlug": "spirituality-faith", "title": "Attend a Campus Ministry retreat" },
+    { "id": 24, "catSlug": "spirituality-faith", "title": "Visit the Chapel of St. Ignatius" }
 ]},
-{ "title": "Leadership", "experiences": [
-{ "title": "Support student club events" },
-{ "title": "Participate in Leadership Blitz" },
-{ "title": "Participate in a rally or march" },
-{ "title": "Apply for a leadership position" },
-{ "title": "Run for student government" },
-{ "title": "Submit an issue to SGSU using We the Redhawk petition" }
+{ "title": "Leadership", "slug": "leadership", "experiences": [
+    { "id": 25, "catSlug": "leadership", "title": "Support student club events" },
+    { "id": 26, "catSlug": "leadership", "title": "Participate in Leadership Blitz" },
+    { "id": 27, "catSlug": "leadership", "title": "Participate in a rally or march" },
+    { "id": 28, "catSlug": "leadership", "title": "Apply for a leadership position" },
+    { "id": 29, "catSlug": "leadership", "title": "Run for student government" },
+    { "id": 30, "catSlug": "leadership", "title": "Submit an issue to SGSU using We the Redhawk petition" }
 ]},
-{ "title": "Pride and Traditions ", "experiences": [
-{ "title": "Attend a match or game for each SU athletics team" },
-{ "title": "Wear red on Fridays" },
-{ "title": "Take your picture with Rudy the Redhawk" },
-{ "title": "Learn the SU fight song" },
-{ "title": "Attend Quadstock" },
-{ "title": "Sing carols at the Christmas Tree Lighting" },
-{ "title": "Cheer on SU at Homecoming" },
-{ "title": "Go to Midnight Madness" },
-{ "title": "Read the Spectator every week" }
+{ "title": "Pride and Traditions ", "slug": "pride-and-traditions", "experiences": [
+    { "id": 31, "catSlug": "pride-and-traditions", "title": "Attend a match or game for each SU athletics team" },
+    { "id": 32, "catSlug": "pride-and-traditions", "title": "Wear red on Fridays" },
+    { "id": 33, "catSlug": "pride-and-traditions", "title": "Take your picture with Rudy the Redhawk" },
+    { "id": 34, "catSlug": "pride-and-traditions", "title": "Learn the SU fight song" },
+    { "id": 35, "catSlug": "pride-and-traditions", "title": "Attend Quadstock" },
+    { "id": 36, "catSlug": "pride-and-traditions", "title": "Sing carols at the Christmas Tree Lighting" },
+    { "id": 37, "catSlug": "pride-and-traditions", "title": "Cheer on SU at Homecoming" },
+    { "id": 38, "catSlug": "pride-and-traditions", "title": "Go to Midnight Madness" },
+    { "id": 39, "catSlug": "pride-and-traditions", "title": "Read the Spectator every week" }
 ]},
-{ "title": "Career Planning", "experiences": [
-{ "title": "Attend networking events" },
-{ "title": "Set up Informational Interviews" },
-{ "title": "Reflect on your strengths and skills" },
-{ "title": "Get a part-time job or internship" }
+{ "title": "Career Planning", "slug": "career-planning", "experiences": [
+    { "id": 40, "catSlug": "career-planning", "title": "Attend networking events" },
+    { "id": 41, "catSlug": "career-planning", "title": "Set up Informational Interviews" },
+    { "id": 42, "catSlug": "career-planning", "title": "Reflect on your strengths and skills" },
+    { "id": 43, "catSlug": "career-planning", "title": "Get a part-time job or internship" }
 ]}
 ]
