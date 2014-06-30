@@ -143,7 +143,7 @@ angular.module('rhx', ['ionic', 'firebase'])
           }
         });
     }
-    return [response];
+    return response;
   };
 
   // END EXPERIENCING STUFF
