@@ -58,7 +58,7 @@
                   </p>
                 </div>
                 <div class="item tabs tabs-secondary tabs-icon-left">
-                  <a class="tab-item" ng-click="markDone(experience)" ng-class="{true: 'complete', false: 'incomplete'}[checkCompletion(experience)]">
+                  <a class="tab-item" ng-click="markDone(experience)" ng-class="checkCompletion(experience)">
                     <i class="icon ion-checkmark-circled"></i>
                     Done
                   </a>

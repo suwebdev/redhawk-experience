@@ -127,23 +127,23 @@ angular.module('rhx', ['ionic', 'firebase'])
     console.log('Marked experience done: ', experience);
   };
   $scope.checkCompletion = function(experience) {
-    console.log('checking for completion of this experience: ', experience);
+    //console.log('checking for completion of this experience: ', experience);
+    var response = false;
     if ($scope.loginObj.user) {
       var checkResult = $scope.doneDataObj
         .child($scope.loginObj.user.id)
         .child(experience.catSlug)
         .child(experience.id).on('value', function(snapshot) {
           if(snapshot.val() === null) {
-            console.log('Incomplete');
-            return false;
+            console.log('Incomplete: ', experience);
+            response = 'incomplete';
           } else {
-            console.log('Complete');
-            return true;
+            console.log('Complete: ', experience);
+            response = 'complete';
           }
         });
-    } else {
-      return false;
     }
+    return [response];
   };
 
   // END EXPERIENCING STUFF

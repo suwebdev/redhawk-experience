@@ -56,6 +56,9 @@ $ionicons-font-path: "../lib/ionic/fonts" !default;
         white-space: normal;
     }
 }
+.complete {
+    color: $assertive;
+}
 ion-content {
     margin-top: 40px !important;
 }

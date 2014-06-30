@@ -1,0 +1,50 @@
+<ion-view title="'Experience'" hide-back-button="true">
+<ion-header-bar class="bar-assertive">
+  <button class="button button-icon" ng-click="toggleMenu()">
+    <i class="icon ion-navicon"></i>
+  </button>
+  <h1 class="title">Redhawk Experience</h1>
+  <span ng-show="loginObj.user">
+    {{loginObj.user.name}}
+  </span>
+</ion-header-bar>
+<div class="bar bar-subheader bar-dark">
+  <h2 class="title">{{activeCategory.title}}</h2>
+</div>
+<ion-content>
+    <ion-list>
+      <ion-item ng-repeat="experience in activeCategory.experiences" class="experience-card">
+        <div class="list card">
+          <div class="item item-avatar" ng-click="showDetails(experience)">
+            <img src="http://placekitten.com/64/64/">
+            <h2>{{experience.title}}</h2>
+          </div>
+          <div class="item item-body" ng-show="displayDetails == experience">
+            <img class="full-image" src="http://placekitten.com/300/200/">
+            <p>
+              Wayfarers squid next level street art tattooed swag vinyl. Biodiesel church-key vegan, pickled hoodie fanny pack master cleanse freegan tattooed organic fixie VHS next level.
+            </p>
+            <p>
+              <a href="#" class="subdued">1 Friend Completed</a>
+              <a href="#" class="subdued">5 Comments</a>
+            </p>
+          </div>
+          <div class="item tabs tabs-secondary tabs-icon-left">
+            <a class="tab-item" href="#">
+              <i class="icon ion-checkmark-circled"></i>
+              Done
+            </a>
+            <a class="tab-item" href="#">
+              <i class="icon ion-chatbox"></i>
+              Comment
+            </a>
+            <a class="tab-item" href="#">
+              <i class="icon ion-share"></i>
+              Share
+            </a>
+          </div>
+        </div>
+      </ion-item>
+    </ion-list>
+  </ion-content>
+</ion-view>

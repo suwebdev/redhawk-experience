@@ -7064,6 +7064,9 @@ a.button {
 .menu-content .card-experience .item-avatar h2 {
   white-space: normal; }
 
+.complete {
+  color: #aa0000; }
+
 ion-content {
   margin-top: 40px !important; }
 
