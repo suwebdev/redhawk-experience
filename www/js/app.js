@@ -60,6 +60,10 @@ angular.module('rhx', ['ionic', 'firebase'])
       $scope.openLogin();
     } else {
       console.log('Found current user: ', user);
+      $scope.doneDataObj = new Firebase(baseFirebaseURL + 'done/' + user.id + '/');
+      for (var i = 0; i<$scope.activeCategory.length; i++){
+        $scope.checkCompletion($scope.activeCategory.experiences[i]);
+      }
     }
   }, function(err) {
     console.log('Error happened loading current user: ', err);
@@ -101,45 +105,74 @@ angular.module('rhx', ['ionic', 'firebase'])
   $scope.commentDataObj = new Firebase(baseFirebaseURL + 'comments/');
   $scope.commentData = {};
   $scope.submitComment = function() {
-    var commentFBData = {};
-    commentFBData[$scope.commentData.category.slug] = {};
-    commentFBData[$scope.commentData.category.slug][$scope.commentData.experience.id] = {
-      user: $scope.loginObj.user.id,
+    var commentFBData = {
+      experienceId: $scope.commentData.experience.id,
+      userId: $scope.loginObj.user.id,
+      userEmail: $scope.loginObj.user.email,
       text: $scope.commentData.text,
       timestamp: Firebase.ServerValue.TIMESTAMP
     };
-    $scope.commentDataObj.set(commentFBData);
+    $scope.commentDataObj.push(commentFBData);
     console.log('Saved comment', commentFBData);
     $scope.closeComment();
   };
 
-  $scope.doneDataObj = new Firebase(baseFirebaseURL + 'done/');
   $scope.markDone = function(experience) {
-    var doneData = {};
-    doneData[$scope.loginObj.user.id] = {};
-    doneData[$scope.loginObj.user.id][experience.catSlug] = {};
-    doneData[$scope.loginObj.user.id][experience.catSlug][experience.id] = {
+    if (!$scope.doneDataObj) {
+      return false;
+    }
+    var doneData = {
       title: experience.title,
       catSlug: experience.catSlug,
-      id: experience.id
+      user: $scope.loginObj.user.id,
+      id: experience.id,
+      timestamp: Firebase.ServerValue.TIMESTAMP
     };
-    $scope.doneDataObj.set(doneData);
-    console.log('Marked experience done: ', experience);
+
+    $scope.doneDataObj.on('value', function(snapshot) {
+      var uniquePassed = true;
+      var result = snapshot.val();
+      if(result === null) {
+        // If no experiences at all are recorded, then we record it.
+        console.log('No existing records found.');
+        uniquePassed = true;
+      } else {
+        for (var item in result){
+          if (result[item].id===doneData.id){
+            // If we find in recorded experiences, ignore it.
+            uniquePassed = false;
+            console.log('Experience already recorded. Ignoring input');
+            break;
+          }
+        }
+      }
+      if(uniquePassed){
+        // If it's unique, then record it.
+        console.log('Writing new experience record.');
+        $scope.doneDataObj.push(doneData);
+        uniquePassed = false;
+      }
+    });
   };
   $scope.checkCompletion = function(experience) {
     //console.log('checking for completion of this experience: ', experience);
     var response = false;
+    if (!$scope.doneDataObj) {
+      return response;
+    }
     if ($scope.loginObj.user) {
       var checkResult = $scope.doneDataObj
-        .child($scope.loginObj.user.id)
-        .child(experience.catSlug)
-        .child(experience.id).on('value', function(snapshot) {
-          if(snapshot.val() === null) {
-            console.log('Incomplete: ', experience);
-            response = 'incomplete';
+        .on('value', function(snapshot) {
+          var result = snapshot.val();
+          if(result === null) {
+            console.log('No Data Returned to checkCompletion.');
           } else {
-            console.log('Complete: ', experience);
-            response = 'complete';
+            for (var item in result){
+              if (result[item].id===experience.id){
+                console.log('Complete: ', experience);
+                response = true;
+              }
+            }
           }
         });
     }
@@ -186,6 +219,7 @@ angular.module('rhx', ['ionic', 'firebase'])
       console.log('Logged in as: ', user.uid);
       $scope.closeLogin();
       $ionicSideMenuDelegate.toggleLeft(false);
+
     }, function(error) {
       // Show a form error here
       console.error('Unable to login', error);
@@ -215,12 +249,32 @@ angular.module('rhx', ['ionic', 'firebase'])
     animation: 'slide-in-up'
   });
 
+  $ionicModal.fromTemplateUrl('commentList.html', function(modal) {
+    $scope.commentListModal = modal;
+  }, {
+    scope: $scope,
+    animation: 'slide-in-up'
+  });
   $ionicModal.fromTemplateUrl('comment.html', function(modal) {
     $scope.commentModal = modal;
   }, {
     scope: $scope,
     animation: 'slide-in-up'
   });
+  $scope.commentDataObj =  new Firebase("https://redhawk-experience.firebaseio.com/comments/");
+  $scope.bigCommentsList = $firebase($scope.commentDataObj);
+  $scope.openCommentList = function(experience, category) {
+    if (!$scope.loginObj.user) {
+      $scope.loginModal.show();
+    } else {
+      $scope.commentData.experience = experience;
+      $scope.commentData.category = category;
+      $scope.commentListModal.show();
+    }
+  };
+  $scope.closeCommentList = function() {
+    $scope.commentListModal.hide();
+  };
   $scope.openComment = function(experience, category) {
     if (!$scope.loginObj.user) {
       $scope.loginModal.show();
@@ -232,6 +286,7 @@ angular.module('rhx', ['ionic', 'firebase'])
   };
   $scope.closeComment = function() {
     $scope.commentModal.hide();
+    $scope.commentData = {};
   };
   $scope.openRegister = function() {
     $scope.registerModal.show();
