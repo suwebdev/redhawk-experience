@@ -30,7 +30,7 @@ angular.module('rhx', ['ionic', 'firebase'])
       return $firebase(new Firebase(baseFirebaseURL+'experienceSource'));
     },
     save: function(categories) {
-      window.localStorage['categories'] = angular.toJson(categories);
+      localStorage.setItem('categories', angular.toJson(categories));
     },
     newCategory: function(categoryTitle) {
       // Add a new category
@@ -40,22 +40,26 @@ angular.module('rhx', ['ionic', 'firebase'])
       };
     },
     getLastActiveIndex: function() {
-      return parseInt(window.localStorage['lastActiveCategory']) || 0;
+      return parseInt(localStorage.getItem('lastActiveCategory')) || 0;
     },
     setLastActiveIndex: function(index) {
-      window.localStorage['lastActiveCategory'] = index;
+      localStorage.setItem('lastActiveCategory', index);
     }
   }
 })
-.controller('ExperienceCtrl', function($scope, $timeout, $ionicModal, Categories, $ionicSideMenuDelegate, $firebase, $firebaseSimpleLogin) {
+.controller('ExperienceCtrl', function($scope, $rootScope, $timeout, $ionicModal, Categories, $ionicSideMenuDelegate, $ionicLoading, $firebase, $firebaseSimpleLogin) {
   // Initialize user
   // Handle login/id stuff
   var loginDataRef = new Firebase("https://redhawk-experience.firebaseio.com/");
   $scope.loginObj = $firebaseSimpleLogin(loginDataRef);
   $scope.loginData = {};
+  $ionicLoading.show({
+      template: 'Logging in...'
+    });
   $scope.loginObj.$getCurrentUser().then(function(user) {
     if(!user){
       console.log('No current user found');
+      $ionicLoading.hide();
       // Might already be handled by logout event below
       $scope.openLogin();
     } else {
@@ -64,9 +68,11 @@ angular.module('rhx', ['ionic', 'firebase'])
       for (var i = 0; i<$scope.activeCategory.length; i++){
         $scope.checkCompletion($scope.activeCategory.experiences[i]);
       }
+      $ionicLoading.hide();
     }
   }, function(err) {
     console.log('Error happened loading current user: ', err);
+    $ionicLoading.hide();
   });
   // Load or initialize categories
   $scope.categories = Categories.all();
@@ -98,7 +104,6 @@ angular.module('rhx', ['ionic', 'firebase'])
         }
       });
     }
-
   };
 
   // Experiencing Stuff
@@ -199,18 +204,26 @@ angular.module('rhx', ['ionic', 'firebase'])
 
   $scope.tryRegister = function() {
     console.log('Attempting to register new user.');
+    $ionicLoading.show({
+        template: 'Registering new user...'
+      });
     $scope.loginObj.$createUser(
       $scope.loginData.email,
       $scope.loginData.password).then(function(user) {
-          console.log('CREATED User ID: ' + user.uid + ', Email: ' + user.email);
+        $ionicLoading.hide();
+        console.log('CREATED User ID: ' + user.uid + ', Email: ' + user.email);
       }, function(error) {
-          console.log('ERROR creating user: ', error);
+        $ionicLoading.hide();
+        console.log('ERROR creating user: ', error);
       });
     $scope.closeRegister();
     $scope.tryLogin();
   };
 
   $scope.tryLogin = function() {
+    $ionicLoading.show({
+        template: 'Logging in...'
+      });
     $scope.loginObj.$login('password', {
       email: $scope.loginData.email,
       password: $scope.loginData.password
@@ -219,10 +232,11 @@ angular.module('rhx', ['ionic', 'firebase'])
       console.log('Logged in as: ', user.uid);
       $scope.closeLogin();
       $ionicSideMenuDelegate.toggleLeft(false);
-
+      $ionicLoading.hide();
     }, function(error) {
       // Show a form error here
       console.error('Unable to login', error);
+      $ionicLoading.hide();
     });
   };
   // END LOGIN/ID STUFF

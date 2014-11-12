@@ -1,11 +1,12 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="com.ionicframework.starter" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
-    <name>HelloCordova</name>
+<widget id="edu.seattleu.rhx" version="0.0.2" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+    <name>The Redhawk Experience</name>
     <description>
-        An Ionic Framework and Cordova project.
+        An application created by Seattle University to help students engage
+        with the mission and substance of the Redhawk Experience.
     </description>
-    <author email="hi@ionicframework" href="http://ionicframework.com/">
-      Ionic Framework Team
+    <author email="mobileapps@seattleu.edu" href="http://www.seattleu.edu/redhawk-experience/">
+        Seattle University Student Development Services
     </author>
     <content src="index.html" />
     <access origin="*" />
@@ -14,7 +15,7 @@
     <preference name="UIWebViewBounce" value="false" />
     <preference name="DisallowOverscroll" value="true" />
 
-    <!-- Don't store local date in an iCloud backup. Turn this to "cloud" to enable storage 
+    <!-- Don't store local date in an iCloud backup. Turn this to "cloud" to enable storage
          to be sent to iCloud. Note: enabling this could result in Apple rejecting your app.
     -->
     <preference name="BackupWebStorage" value="none" />
