@@ -1,0 +1,25 @@
+<div class="modal">
+  <!-- Modal header bar -->
+  <ion-header-bar class="bar-secondary bar-dark">
+    <h1 class="title">Post a Comment</h1>
+    <button class="button button-clear button-light" ng-click="closeComment()"><i class="icon ion-close-circled"></i></button>
+  </ion-header-bar>
+  <!-- Modal content area -->
+  <ion-content>
+    <div class="padding">
+      Commenting on: {{commentData.experience.title}}
+    </div>
+    <form ng-submit="submitComment()">
+      <div class="list list-inset">
+        <div>
+          <label class="item item-input">
+            <textarea rows="10" cols="70" placeholder="Type your comment here..." ng-model="commentData.text"></textarea>
+          </label>
+        </div>
+        <div class="padding">
+          <button class="button button-block button-assertive" type="submit">Comment</button>
+        </div>
+      </div>
+    </form>
+  </ion-content>
+</div>

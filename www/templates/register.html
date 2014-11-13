@@ -1,12 +1,12 @@
 <div class="modal">
   <!-- Modal header bar -->
   <ion-header-bar class="bar-secondary bar-dark">
-    <h1 class="title">Login</h1>
-    <button class="button button-clear button-light" ng-click="closeLogin()"><i class="icon ion-close-circled"></i></button>
+    <h1 class="title">Register</h1>
+    <button class="button button-clear button-light" ng-click="closeRegister()"><i class="icon ion-close-circled"></i></button>
   </ion-header-bar>
   <!-- Modal content area -->
   <ion-content>
-    <form ng-submit="tryLogin()">
+    <form ng-submit="tryRegister()">
       <div class="list list-inset">
         <div>
           <label class="item item-input">
@@ -17,9 +17,9 @@
           </label>
         </div>
         <div class="padding">
-          <button class="button button-block button-assertive" type="submit">Log In</button>
+          <button class="button button-block button-assertive" type="submit">Register</button>
           <div style="text-align: center">
-            Or <a ng-click="openRegister()">Create an account.</a>
+            Or <a ng-click="openLogin()">Log in.</a>
           </div>
         </div>
       </div>

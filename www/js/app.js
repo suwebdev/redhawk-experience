@@ -5,7 +5,7 @@ var baseFirebaseURL = 'https://redhawk-experience.firebaseio.com/';
 // angular.module is a global place for creating, registering and retrieving Angular modules
 // 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
 // the 2nd parameter is an array of 'requires'
-angular.module('rhx', ['ionic', 'firebase'])
+angular.module('rhx', ['ionic', 'firebase', 'ngCordova'])
 
 .run(function($ionicPlatform) {
   $ionicPlatform.ready(function() {
@@ -47,7 +47,7 @@ angular.module('rhx', ['ionic', 'firebase'])
     }
   }
 })
-.controller('ExperienceCtrl', function($scope, $rootScope, $timeout, $ionicModal, Categories, $ionicSideMenuDelegate, $ionicLoading, $firebase, $firebaseSimpleLogin) {
+.controller('ExperienceCtrl', function($scope, $rootScope, $timeout, $ionicModal, Categories, $ionicSideMenuDelegate, $ionicLoading, $firebase, $firebaseSimpleLogin, $cordovaSocialSharing) {
   // Initialize user
   // Handle login/id stuff
   var loginDataRef = new Firebase("https://redhawk-experience.firebaseio.com/");
@@ -184,6 +184,15 @@ angular.module('rhx', ['ionic', 'firebase'])
     return response;
   };
 
+  $scope.shareAnywhere = function(experience) {
+    // TODO: Make all this data modulated according to Experience records
+    var exp_msg = 'I just completed the '+experience.title+' challenge in the Redhawk Experience.';
+    var exp_share_subj = experience.title;
+    var exp_img = "http://lorempixel.com/600/600/cats/";
+    var exp_url = "http://seattleu.edu/redhawk-experience/";
+
+    $cordovaSocialSharing.share(exp_msg, exp_share_subj, exp_img, exp_url);
+  }
   // END EXPERIENCING STUFF
 
   // Handle login/id stuff
@@ -242,34 +251,34 @@ angular.module('rhx', ['ionic', 'firebase'])
   // END LOGIN/ID STUFF
 
   // Create and load Modals
-  $ionicModal.fromTemplateUrl('login.html', function(modal) {
+  $ionicModal.fromTemplateUrl('templates/login.html', function(modal) {
     $scope.loginModal = modal;
   }, {
     scope: $scope,
     animation: 'slide-in-up'
   });
 
-  $ionicModal.fromTemplateUrl('register.html', function(modal) {
+  $ionicModal.fromTemplateUrl('templates/register.html', function(modal) {
     $scope.registerModal = modal;
   }, {
     scope: $scope,
     animation: 'slide-in-up'
   });
 
-  $ionicModal.fromTemplateUrl('logout.html', function(modal) {
+  $ionicModal.fromTemplateUrl('templates/logout.html', function(modal) {
     $scope.logoutModal = modal;
   }, {
     scope: $scope,
     animation: 'slide-in-up'
   });
 
-  $ionicModal.fromTemplateUrl('commentList.html', function(modal) {
+  $ionicModal.fromTemplateUrl('templates/commentList.html', function(modal) {
     $scope.commentListModal = modal;
   }, {
     scope: $scope,
     animation: 'slide-in-up'
   });
-  $ionicModal.fromTemplateUrl('comment.html', function(modal) {
+  $ionicModal.fromTemplateUrl('templates/comment.html', function(modal) {
     $scope.commentModal = modal;
   }, {
     scope: $scope,

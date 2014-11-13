@@ -14,6 +14,7 @@
     <!-- ionic/angularjs js -->
     <script src="lib/ionic/js/ionic.bundle.js"></script>
 
+    <script src="lib/ngCordova/dist/ng-cordova.min.js"></script>
     <!-- cordova script (this will be a 404 during development) -->
     <script src="cordova.js"></script>
 
@@ -53,7 +54,6 @@
                     Wayfarers squid next level street art tattooed swag vinyl. Biodiesel church-key vegan, pickled hoodie fanny pack master cleanse freegan tattooed organic fixie VHS next level.
                   </p>
                   <p>
-                    <a href="#" class="subdued">1 Friend Completed</a>
                     <a href="#" ng-click="openCommentList(experience, category)">Comments</a>
                   </p>
                 </div>
@@ -66,7 +66,7 @@
                     <i class="icon ion-chatbox"></i>
                     Comment
                   </a>
-                  <a class="tab-item" href="#">
+                  <a class="tab-item" href="#" ng-click="shareAnywhere(experience)">
                     <i class="icon ion-share"></i>
                     Share
                   </a>
@@ -96,135 +96,5 @@
       </ion-side-menu>
     </ion-side-menus>
     <!-- TEMPLATES -->
-    <script id="commentList.html" type="text/ng-template">
-      <div class="modal">
-        <!-- Modal header bar -->
-        <ion-header-bar class="bar-secondary bar-dark">
-          <h1 class="title">Comments</h1>
-          <button class="button button-clear button-light" ng-click="closeCommentList()"><i class="icon ion-close-circled"></i></button>
-        </ion-header-bar>
-        <!-- Modal content area -->
-        <ion-content>
-          <div class="padding">
-            <h2>{{commentData.experience.title}}</h2>
-            <ion-list>
-              <ion-item ng-repeat="comment in bigCommentsList" ng-show="comment.experienceId==commentData.experience.id">
-                <p>{{ comment.text }}</p>
-                <p>{{ comment.userEmail }}</p>
-                <p>{{ comment.experienceId}}</p>
-              </ion-item>
-            </ion-list>
-          </div>
-        </ion-content>
-      </div>
-    </script>
-    <script id="comment.html" type="text/ng-template">
-      <div class="modal">
-        <!-- Modal header bar -->
-        <ion-header-bar class="bar-secondary bar-dark">
-          <h1 class="title">Post a Comment</h1>
-          <button class="button button-clear button-light" ng-click="closeComment()"><i class="icon ion-close-circled"></i></button>
-        </ion-header-bar>
-        <!-- Modal content area -->
-        <ion-content>
-          <div class="padding">
-            Commenting on: {{commentData.experience.title}}
-          </div>
-          <form ng-submit="submitComment()">
-            <div class="list list-inset">
-              <div>
-                <label class="item item-input">
-                  <textarea rows="10" cols="70" placeholder="Type your comment here..." ng-model="commentData.text"></textarea>
-                </label>
-              </div>
-              <div class="padding">
-                <button class="button button-block button-assertive" type="submit">Comment</button>
-              </div>
-            </div>
-          </form>
-        </ion-content>
-      </div>
-    </script>
-    <script id="register.html" type="text/ng-template">
-      <div class="modal">
-        <!-- Modal header bar -->
-        <ion-header-bar class="bar-secondary bar-dark">
-          <h1 class="title">Register</h1>
-          <button class="button button-clear button-light" ng-click="closeRegister()"><i class="icon ion-close-circled"></i></button>
-        </ion-header-bar>
-        <!-- Modal content area -->
-        <ion-content>
-          <form ng-submit="tryRegister()">
-            <div class="list list-inset">
-              <div>
-                <label class="item item-input">
-                  <input type="text" placeholder="Email" ng-model="loginData.email">
-                </label>
-                <label class="item item-input">
-                  <input type="password" placeholder="Password" ng-model="loginData.password">
-                </label>
-              </div>
-              <div class="padding">
-                <button class="button button-block button-assertive" type="submit">Register</button>
-                <div style="text-align: center">
-                  Or <a ng-click="openLogin()">Log in.</a>
-                </div>
-              </div>
-            </div>
-          </form>
-        </ion-content>
-      </div>
-    </script>
-    <script id="login.html" type="text/ng-template">
-      <div class="modal">
-        <!-- Modal header bar -->
-        <ion-header-bar class="bar-secondary bar-dark">
-          <h1 class="title">Login</h1>
-          <button class="button button-clear button-light" ng-click="closeLogin()"><i class="icon ion-close-circled"></i></button>
-        </ion-header-bar>
-        <!-- Modal content area -->
-        <ion-content>
-          <form ng-submit="tryLogin()">
-            <div class="list list-inset">
-              <div>
-                <label class="item item-input">
-                  <input type="text" placeholder="Email" ng-model="loginData.email">
-                </label>
-                <label class="item item-input">
-                  <input type="password" placeholder="Password" ng-model="loginData.password">
-                </label>
-              </div>
-              <div class="padding">
-                <button class="button button-block button-assertive" type="submit">Log In</button>
-                <div style="text-align: center">
-                  Or <a ng-click="openRegister()">Create an account.</a>
-                </div>
-              </div>
-            </div>
-          </form>
-        </ion-content>
-      </div>
-    </script>
-    <script id="logout.html" type="text/ng-template">
-
-      <div class="modal">
-
-        <!-- Modal header bar -->
-        <ion-header-bar class="bar-secondary bar-dark">
-          <h1 class="title">Logout</h1>
-        </ion-header-bar>
-        <!-- Modal content area -->
-        <ion-content>
-          <div class="padding">
-            You have successfully logged out of this app.
-          </div>
-          <div class="padding">
-            <button ng-click="closeLogout()" class="button button-block button-assertive">Close</button>
-          </div>
-        </ion-content>
-
-      </div>
-
-    </script>
   </body>
 </html>

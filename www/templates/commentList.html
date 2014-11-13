@@ -1,0 +1,20 @@
+<div class="modal">
+  <!-- Modal header bar -->
+  <ion-header-bar class="bar-secondary bar-dark">
+    <h1 class="title">Comments</h1>
+    <button class="button button-clear button-light" ng-click="closeCommentList()"><i class="icon ion-close-circled"></i></button>
+  </ion-header-bar>
+  <!-- Modal content area -->
+  <ion-content>
+    <div class="padding">
+      <h2>{{commentData.experience.title}}</h2>
+      <ion-list>
+        <ion-item ng-repeat="comment in bigCommentsList" ng-show="comment.experienceId==commentData.experience.id">
+          <p>{{ comment.text }}</p>
+          <p>{{ comment.userEmail }}</p>
+          <p>{{ comment.experienceId}}</p>
+        </ion-item>
+      </ion-list>
+    </div>
+  </ion-content>
+</div>
